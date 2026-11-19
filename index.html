@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agentarium3D | The delivery floor in 3D, with opening sequence</title>
+<meta name="description" content="Agentarium3D, a living world of AI agents: 21 AI agents, their stations, and what each one is doing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!--
+  EMBEDDING (full notes in DOCS.md)
+  Copy three things into the host page: the fonts link above, the stylesheet link below,
+  and the <div> plus <script type="module"> from the body. Every class is prefixed mf3-,
+  nothing is added to window, and the 3D code only downloads when the section nears the screen.
+
+  LIVE STATUS (optional)
+  Pass a URL to mount():  mount(el, { statusUrl: "status.json" })
+  Without it the floor plays the scripted demo run and says so on screen.
+-->
+<link rel="stylesheet" href="floor3d/floor3d.css">
+<link rel="icon" href="data:,">
+</head>
+<body style="margin:0;background:#080E1F">
+
+<div id="agentarium3d"></div>
+
+<noscript>
+  <p style="margin:0;padding:48px 24px;color:#9AA8C4;font:16px/1.6 system-ui,sans-serif">
+    The delivery floor needs JavaScript. It shows 21 AI agents, not employees, arranged as a delivery pipeline, and plays a scripted example of a typical sprint.
+  </p>
+</noscript>
+
+<script>
+  /* Opened by double-click (file://), browsers refuse to load the modules and the page would
+     be blank. Say so instead. This block is only for local previews; a hosted page never hits it. */
+  if (location.protocol === "file:") {
+    var note = document.createElement("p");
+    note.style.cssText = "margin:0;padding:48px 24px;max-width:62ch;color:#E8EDF7;font:16px/1.6 system-ui,sans-serif";
+    note.textContent = "This page has to be opened through a web server, not by double-clicking the file. Run preview-floor3d.bat in this folder (or: python -m http.server 8765) and open http://127.0.0.1:8765/";
+    document.body.appendChild(note);
+  }
+</script>
+<script type="module">
+  import { mount } from "./floor3d/main.js";
+  /* Version C: version B plus the opening sequence. The controller sits outside the floor, so the
+     human desk is left out (hideLead). Starts in the dark view; the switch still offers daylight. */
+  /* Recording helpers, read from the address bar. None of them is needed on the live site.
+       ?wall=Concept%20Floor   name on the back wall (and the browser tab)
+       ?line=Thought%20experiment   small line under it
+       ?lead=Lead               label for the one human desk, instead of Lead
+       ?tour=1                  start the guided tour automatically
+       ?model=floor3d/models/controller.glb   character file for the person at the desk (same site only) */
+  const q = new URLSearchParams(location.search);
+  const options = Object.assign({ look: "night", figures: "people", themeSwitch: true, layouts: ["it", "manufacturing", "media"], intro: true, hideLead: true }, {
+    wallName: q.get("wall") || undefined, wallLine: q.get("line") || undefined,
+    leadName: q.get("lead") || undefined, autoTour: q.get("tour") === "1"
+  });
+  /* The person at the desk is a photo cutout. Add ?photo=0 to see the built-in 3D figure instead. */
+  if (q.get("photo") !== "0") options.controllerImage = "floor3d/assets/controller.webp";
+  /* Only a plain path on this site is accepted from the address bar, never another host. */
+  const model = q.get("model");
+  if (model && /^[\w\-./]+\.glb$/.test(model) && model.indexOf("..") < 0 && model[0] !== "/") options.controllerModel = model;
+  if (q.get("wall")) document.title = "Agentarium3D | " + q.get("wall").slice(0, 28);
+  mount(document.getElementById("agentarium3d"), options);
+</script>
+</body>
+</html>
