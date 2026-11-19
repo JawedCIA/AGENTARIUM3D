@@ -49,12 +49,12 @@
        ?wall=Concept%20Floor   name on the back wall (and the browser tab)
        ?line=Thought%20experiment   small line under it
        ?lead=Lead               label for the one human desk, instead of Lead
-       ?tour=1                  start the guided tour automatically
+       ?tour=0                  open without the guided tour (it starts by itself by default)
        ?model=floor3d/models/controller.glb   character file for the person at the desk (same site only) */
   const q = new URLSearchParams(location.search);
   const options = Object.assign({ look: "night", figures: "people", themeSwitch: true, layouts: ["it", "manufacturing", "media"], intro: true, hideLead: true }, {
     wallName: q.get("wall") || undefined, wallLine: q.get("line") || undefined,
-    leadName: q.get("lead") || undefined, autoTour: q.get("tour") === "1"
+    leadName: q.get("lead") || undefined, autoTour: q.get("tour") !== "0"
   });
   /* The person at the desk is a photo cutout. Add ?photo=0 to see the built-in 3D figure instead. */
   if (q.get("photo") !== "0") options.controllerImage = "floor3d/assets/controller.webp";

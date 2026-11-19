@@ -7,7 +7,7 @@
 </p>
 
 <p align="center">
-  <a href="https://jawedcia.github.io/AGENTARIUM3D/">Live demo</a> ·
+  <a href="https://agentarium3d.jawed-iitk.workers.dev/">Live demo</a> ·
   <a href="DOCS.md">Documentation</a> ·
   <a href="#run-it">Run it locally</a> ·
   <a href="#use-it-on-your-own-page">Embed it</a>
@@ -61,7 +61,9 @@ It must be served over http; browsers do not load script modules from `file://`.
 | `floor3d.html` | Night look |
 | `floor3d-day.html` | Daylight look, with the dark/day switch |
 
-Add `?tour=1` to start the tour by itself, and `?wall=Your%20Name` to put a name on the back wall.
+`index.html` and `floor3d-intro.html` start the guided tour by themselves after the opening
+sequence; add `?tour=0` to open them without it, or press "Exit tour" at any time. On the other two
+pages add `?tour=1` to start the tour by itself. `?wall=Your%20Name` puts a name on the back wall.
 
 ## Use it on your own page
 
