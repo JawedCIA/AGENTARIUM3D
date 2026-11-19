@@ -1,0 +1,21 @@
+# Files Cloudflare should not serve as part of the website. Same format as .gitignore.
+# They stay in the GitHub repository; this only keeps them off the deployed site.
+
+# Repository housekeeping
+.git
+.gitignore
+.assetsignore
+
+# Documentation and licence text (read these on GitHub)
+README.md
+DOCS.md
+LICENSE
+
+# Local preview helper
+preview-floor3d.bat
+
+# Logo files and the README picture (used by the GitHub page, not by the site)
+# The leading slash matters: it means "only at the top level", so floor3d/assets/ (the photo the
+# opening sequence needs) is still served.
+/assets/
+/screenshots/
